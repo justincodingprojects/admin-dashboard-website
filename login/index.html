@@ -112,7 +112,7 @@
                             if (window.lock !== "locked") {
                                 var myform = $('.ui.form');
                                 $('.ui.submit.button').addClass('loading')
-                                $.ajax({
+                                /*$.ajax({
                                     type: myform.attr('method'),
                                     url: myform.attr('action'),
                                     data: myform.serialize(),
@@ -122,6 +122,18 @@
                                         window.lock = "";
                                     }
                                 });
+                                */
+                                fetch(myform.attr('action'), {
+    method: myform.attr('method'),
+    mode: "cors",
+    cache: "no-cache",
+    redirect: "follow",
+    body: myform.serialize(),
+}).then().then((response) => response.json()).then((data) => {
+    $('.ui.submit.button').removeClass('loading')
+    JSON.parse(JSON.stringify(data)).authorized ? ((document.cookie = "authkey=" + JSON.parse(JSON.stringify(data)).key + ";path=/") & (window.location.href = "../")) : ($(".ui.form").removeClass("success").addClass("error") & $('.ui.error.message').empty() & $('.ui.error.message').append('<div class="header">Invalid Credentials</div><p>Make sure that the credentials you provided are correct.</p>'))
+    window.lock = "";
+});
                             }
                             window.lock = "locked";
                         }
