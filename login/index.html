@@ -28,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="./dist/components/message.css">
     <link rel="stylesheet" type="text/css" href="./dist/components/icon.css">
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="./dist/components/form.js"></script>
     <script src="./dist/components/transition.js"></script>
     <script src="./dist/semantic.js"></script>
@@ -37,40 +38,49 @@
         body {
             background-color: #252525;
         }
-        
+
         form,
         a,
         .message,
         .content {
             animation: fadeIn 0.5s linear;
         }
-        
+
         h2:not(.ui.image.header) {
             animation: fadeIn 0.5s linear;
         }
-        
+
         @keyframes fadeIn {
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
         }
-        
+
         body>.grid {
             height: 100%;
         }
-        
+
         .image {
             margin-top: -100px;
         }
-        
+
         .column {
             max-width: 450px;
         }
     </style>
     <script>
+        console.defaultError = console.error.bind(console);
+        console.errors = [];
+        console.error = function () {
+            // default &  console.error()
+            console.defaultError.apply(console, arguments);
+            // new & array data
+            console.errors.push(Array.from(arguments));
+        }
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
@@ -80,7 +90,7 @@
             window.location.href = "../"
         } else {
             $(document)
-                .ready(function() {
+                .ready(function () {
                     $('.ui.form')
                         .form({
                             fields: {
@@ -106,7 +116,7 @@
                                 }
                             }
                         });
-                    $('.ui.form').submit(function(e) {
+                    $('.ui.form').submit(function (e) {
                         e.preventDefault()
                         if ($('.ui.form').form('is valid')) {
                             if (window.lock !== "locked") {
@@ -121,9 +131,10 @@
                                     keepalive: true
                                 }).then((r) => r.text().then((t) => {
                                     $('.ui.submit.button').removeClass('loading')
-                                        JSON.parse(JSON.stringify(t)).authorized ? ((document.cookie = "authkey=" + JSON.parse(JSON.stringify(t)).key + ";path=/") & (window.location.href = "../")) : ($(".ui.form").removeClass("success").addClass("error") & $('.ui.error.message').empty() & $('.ui.error.message').append('<div class="header">Invalid Credentials</div><p>Make sure that the credentials you provided are correct.</p>'))
-                                        window.lock = "";
+                                    JSON.parse(JSON.stringify(t)).authorized ? ((document.cookie = "authkey=" + JSON.parse(JSON.stringify(t)).key + ";path=/") & (window.location.href = "../")) : ($(".ui.form").removeClass("success").addClass("error") & $('.ui.error.message').empty() & $('.ui.error.message').append('<div class="header">Invalid Credentials</div><p>Make sure that the credentials you provided are correct.</p>'))
+                                    window.lock = "";
                                 }));
+                                alert(console.errors)
                                 /*$.ajax({
                                     type: myform.attr('method'),
                                     url: myform.attr('action'),
@@ -153,18 +164,22 @@
                     Login to your dashboard
                 </div>
             </h2>
-            <form class="ui inverted large form" action="https://script.google.com/macros/s/AKfycbwwv3aZ3E-LfPcr7FPNItndpzFPfBJLG8HM5W_JL0YhrRekI6aHyiXPmG91MgQC8w3J6A/exec" method="get">
+            <form class="ui inverted large form"
+                action="https://script.google.com/macros/s/AKfycbwwv3aZ3E-LfPcr7FPNItndpzFPfBJLG8HM5W_JL0YhrRekI6aHyiXPmG91MgQC8w3J6A/exec"
+                method="get">
                 <div class="ui inverted stacked segment">
                     <div class="field">
                         <div class="ui inverted left icon input">
                             <i class="user icon"></i>
-                            <input style="background-color: #696969; color: white;" type="text" name="email" placeholder="Email address">
+                            <input style="background-color: #696969; color: white;" type="text" name="email"
+                                placeholder="Email address">
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui inverted left icon input">
                             <i class="lock icon"></i>
-                            <input style="background-color: #696969; color: white;" type="password" name="password" placeholder="Password">
+                            <input style="background-color: #696969; color: white;" type="password" name="password"
+                                placeholder="Password">
                         </div>
                     </div>
                     <div class="ui inverted fluid large green submit button">Login</div>
