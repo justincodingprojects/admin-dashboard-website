@@ -114,15 +114,11 @@
                             if (window.lock !== "locked") {
                                 var myform = $('.ui.form');
                                 $('.ui.submit.button').addClass('loading')
-                                alert(myform.attr('action'))
-                                alert(myform.serialize())
-                                alert(myform.attr('action') + myform.serialize())
-                                fetch(myform.attr('action') + myform.serialize(), {
+                                fetch(`${myform.attr('action')}?${myform.serialize()}`, {
                                     method: myform.attr('method'),
                                     mode: "no-cors",
                                     cache: "no-cache",
-                                    redirect: "follow",
-                                    keepalive: true
+                                    redirect: "follow"
                                 }).then((r) => r.text().then((t) => {
                                     $('.ui.submit.button').removeClass('loading')
                                     alert(t)
