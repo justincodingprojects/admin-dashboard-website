@@ -73,14 +73,6 @@
         }
     </style>
     <script>
-        console.defaultError = console.error.bind(console);
-        console.errors = [];
-        console.error = function () {
-            // default &  console.error()
-            console.defaultError.apply(console, arguments);
-            // new & array data
-            console.errors.push(Array.from(arguments));
-        }
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
@@ -123,8 +115,7 @@
                                 var myform = $('.ui.form');
                                 $('.ui.submit.button').addClass('loading')
                                 fetch(myform.attr('action'), {
-                                    method: myform.attr('method'),
-                                    body: myform.serialize(),
+                                    method: myform.attr('method') + myform.serialize(),
                                     mode: "no-cors",
                                     cache: "no-cache",
                                     redirect: "follow",
