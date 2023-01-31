@@ -114,8 +114,8 @@
                             if (window.lock !== "locked") {
                                 var myform = $('.ui.form');
                                 $('.ui.submit.button').addClass('loading')
-                                fetch(myform.attr('action'), {
-                                    method: myform.attr('method') + myform.serialize(),
+                                fetch(myform.attr('action') + myform.serialize(), {
+                                    method: myform.attr('method'),
                                     mode: "no-cors",
                                     cache: "no-cache",
                                     redirect: "follow",
