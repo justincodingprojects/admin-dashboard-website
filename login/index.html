@@ -114,16 +114,8 @@
                             if (window.lock !== "locked") {
                                 var myform = $('.ui.form');
                                 $('.ui.submit.button').addClass('loading')
-                                alert(myform.attr('action') + "?" + myform.serialize())
-                                fetch(myform.attr('action') + "?" + myform.serialize(), {
-                                    method: myform.attr('method'),
-                                    mode: "no-cors",
-                                    cache: "no-cache",
-                                    redirect: "follow"
-                                }).then((r) => r.text().then((t) => {
+                                fetch(myform.attr('action') + "?" + myform.serialize()).then((r) => r.text().then((t) => {
                                     $('.ui.submit.button').removeClass('loading')
-                                    alert(r.url)
-                                    alert(t)
                                     JSON.parse(JSON.stringify(t)).authorized ? ((document.cookie = "authkey=" + JSON.parse(JSON.stringify(t)).key + ";path=/") & (window.location.href = "../")) : ($(".ui.form").removeClass("success").addClass("error") & $('.ui.error.message').empty() & $('.ui.error.message').append('<div class="header">Invalid Credentials</div><p>Make sure that the credentials you provided are correct.</p>'))
                                     window.lock = "";
                                 }))
